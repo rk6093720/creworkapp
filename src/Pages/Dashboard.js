@@ -1,12 +1,35 @@
-import { Box, Flex, Image, Input, InputGroup,Button, InputRightElement, Spacer, Spinner, Text } from '@chakra-ui/react';
-import React, { Suspense } from 'react';
+import {
+  Box,
+  Flex,
+  Image,
+  Input,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  Button,
+  InputRightElement,
+  Spacer,
+  Spinner,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import React, { Suspense, useRef } from 'react';
 import { SearchIcon } from "@chakra-ui/icons";
 import { MdAdd } from "react-icons/md";
 import { FaShareAlt, FaFilter } from "react-icons/fa";
 import { TbSettingsAutomation } from "react-icons/tb";
 import { RiCalendarView, RiProgress2Line } from "react-icons/ri";
 import { FcTodoList } from "react-icons/fc";
+import Taskboard from "./Taskboard";
 const Dashboard = () => {
+     const { isOpen, onOpen, onClose } = useDisclosure();
+     const btnref = useRef();
   return (
     <Suspense
       fallback={
@@ -444,6 +467,9 @@ const Dashboard = () => {
                 color: "white",
                 // marginTop: "15px",
               }}
+              ref={btnref}
+              colorScheme="teal"
+              onClick={onOpen}
             >
               Create New Task
               <MdAdd />
@@ -451,314 +477,62 @@ const Dashboard = () => {
           </Flex>
         </Flex>
         {/* fourth box  */}
-        <Box
-          sx={{
-            width: "100%",
-            height: "570px",
-            padding: "16px",
-            gap: "16px",
-            borderRadius: "8px",
-            opacity: "0px",
-            marginTop: "5px",
-            // border: "1px solid green",
-          }}
+        <Taskboard />
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnref}
+          sx={{ width: "622px", height: "411px", gap: "27px", opacity: "0px" }}
         >
-          <Flex padding={"2px"}>
-            <Box
+          <DrawerOverlay />
+          <DrawerContent
+            sx={{
+              width: "622px",
+              height: "700px",
+              gap: "27px",
+              opacity: "0px",
+            }}
+          >
+            <DrawerCloseButton />
+            <DrawerBody
               sx={{
-                width: "256.75px",
-                height: "100vh",
-                gap: "16px",
+                width: "622px",
+                height: "411px",
+                gap: "38px",
                 opacity: "0px",
-                // border: "1px solid red",
               }}
             >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "24px",
-                  gap: "16px",
-                  opacity: "0px",
-                  display: "flex",
-                  flexDirection: "row",
-                  padding:"2px",
-                  justifyContent: "space-between",
-                  // border: "1px solid red", 
-                }}
-              >
-                <Text
-                  sx={{
-                    width: "126px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    textAlign: "start",
-                  }}
-                >
-                  Todo
-                </Text>
-                <FcTodoList
-                  sx={{
-                    width: "24px",
-                    height: "24px",
-                    gap: "0px",
-                    padding: "2px",
-                    opacity: "0px",
-                    fontSize: "15px",
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "231px",
-                  padding: "14px",
-                  gap: "16px",
-                  borderRadius: "8px",
-                  border: "1px",
-                  opacity: "0px",
-                }}
-              ></Box>
-              <Button
-                sx={{
-                  width: "100%",
-                  height: "52px",
-                  padding: "8px",
-                  gap: "8px",
-                  borderRadius: "8px ",
-                  border: " 1px 0px 0px 0px",
-                  opacity: "0px",
-                  textAlign: "center",
-                  backgroundColor: "#4C38C2",
-                  color: "white",
-                  marginTop: "15px",
-                }}
-              >
-                Create New Task
-                <MdAdd />
+              <FormControl>
+                <FormLabel>Title</FormLabel>
+                <Input sx={{ width: "250px" }} placeholder="Title..." />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Status</FormLabel>
+                <Input sx={{ width: "250px" }} placeholder="Status..." />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Priority</FormLabel>
+                <Input sx={{ width: "250px" }} placeholder="Priority..." />
+              </FormControl>
+              <FormControl>
+                <FormLabel>DeadLine</FormLabel>
+                <Input sx={{ width: "250px" }} placeholder="DeadLine..." />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Input sx={{ width: "250px" }} placeholder="Description..." />
+              </FormControl>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant="outline" mr={3} onClick={onClose}>
+                Cancel
               </Button>
-            </Box>
-            <Box
-              sx={{
-                width: "256.75px",
-                height: "100vh",
-                gap: "16px",
-                opacity: "0px",
-                // border: "1px solid red", 
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "24px",
-                  gap: "16px",
-                  opacity: "0px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  // border: "1px solid red",
-                }}
-              >
-                <Text
-                  sx={{
-                    width: "126px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    textAlign: "start",
-                  }}
-                >
-                  In progress
-                </Text>
-                <RiProgress2Line
-                  sx={{
-                    width: "24px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    fontSize: "15px",
-                    padding: "2px",
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "231px",
-                  padding: "14px",
-                  gap: "16px",
-                  borderRadius: "8px",
-                  border: "1px",
-                  opacity: "0px",
-                }}
-              ></Box>
-              <Button
-                sx={{
-                  width: "100%",
-                  height: "52px",
-                  padding: "8px",
-                  gap: "8px",
-                  borderRadius: "8px ",
-                  border: " 1px 0px 0px 0px",
-                  opacity: "0px",
-                  textAlign: "center",
-                  backgroundColor: "#4C38C2",
-                  color: "white",
-                  marginTop: "15px",
-                }}
-              >
-                Create New Task
-                <MdAdd />
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                width: "256.75px",
-                height: "100vh",
-                gap: "16px",
-                opacity: "0px",
-                // border: "1px solid red",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "24px",
-                  gap: "16px",
-                  opacity: "0px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  // border: "1px solid red",
-                }}
-              >
-                <Text
-                  sx={{
-                    width: "126px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    textAlign: "start",
-                  }}
-                >
-                  Under review
-                </Text>
-                <FcTodoList
-                  sx={{
-                    width: "24px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    padding: "2px",
-                    fontSize: "15px",
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "231px",
-                  padding: "14px",
-                  gap: "16px",
-                  borderRadius: "8px",
-                  border: "1px",
-                  opacity: "0px",
-                }}
-              ></Box>
-              <Button
-                sx={{
-                  width: "100%",
-                  height: "52px",
-                  padding: "8px",
-                  gap: "8px",
-                  borderRadius: "8px ",
-                  border: " 1px 0px 0px 0px",
-                  opacity: "0px",
-                  textAlign: "center",
-                  backgroundColor: "#4C38C2",
-                  color: "white",
-                  marginTop: "15px",
-                }}
-              >
-                Create New Task
-                <MdAdd />
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                width: "256.75px",
-                height: "100vh",
-                gap: "16px",
-                opacity: "0px",
-                // border: "1px solid red",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "24px",
-                  gap: "16px",
-                  opacity: "0px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  // border: "1px solid red",
-                }}
-              >
-                <Text
-                  sx={{
-                    width: "126px",
-                    height: "24px",
-                    gap: "0px",
-                    opacity: "0px",
-                    textAlign: "start",
-                  }}
-                >
-                  Finished
-                </Text>
-                <FcTodoList
-                  sx={{
-                    width: "24px",
-                    height: "24px",
-                    gap: "0px",
-                    padding:"2px",
-                    opacity: "0px",
-                    fontSize: "15px",
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "231px",
-                  padding: "14px",
-                  gap: "16px",
-                  borderRadius: "8px",
-                  border: "1px",
-                  opacity: "0px",
-                }}
-              ></Box>
-              <Button
-                sx={{
-                  width: "100%",
-                  height: "52px",
-                  padding: "8px",
-                  gap: "8px",
-                  borderRadius: "8px ",
-                  border: " 1px 0px 0px 0px",
-                  opacity: "0px",
-                  textAlign: "center",
-                  backgroundColor: "#4C38C2",
-                  color: "white",
-                  marginTop: "15px",
-                }}
-              >
-                Create New Task
-                <MdAdd />
-              </Button>
-            </Box>
-          </Flex>
-        </Box>
+              <Button colorScheme="blue">Save</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </Box>
     </Suspense>
   );

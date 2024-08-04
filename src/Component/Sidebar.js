@@ -1,5 +1,21 @@
- import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { Suspense } from 'react';
+ import {
+   Box,
+   Button,
+   Flex,
+   Image,
+   Text,
+   useDisclosure,
+   Drawer,
+   DrawerBody,
+   DrawerFooter,
+   DrawerOverlay,
+   DrawerContent,
+   DrawerCloseButton,
+   Input,
+   FormControl,
+   FormLabel,
+ } from "@chakra-ui/react";
+import React, { Suspense, useRef } from 'react';
  import {
    BellIcon,
    SunIcon,
@@ -10,9 +26,9 @@ import { CiViewBoard } from "react-icons/ci";
 import { BsMicrosoftTeams } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-
-
  const Sidebar = () => {
+   const { isOpen, onOpen, onClose } = useDisclosure();
+   const btnref= useRef();
    return (
      <Suspense fallback={<h1>Loading ....</h1>}>
        <Box
@@ -231,7 +247,7 @@ import { Link } from 'react-router-dom';
                  </Text>
                </Flex>
              </Box>
-             <Link  to="/taskboard">
+             <Link to="/taskboard">
                <Box
                  sx={{
                    width: "100%",
@@ -380,6 +396,9 @@ import { Link } from 'react-router-dom';
                  color: "white",
                  marginTop: "15px",
                }}
+               ref={btnref}
+               colorScheme="teal"
+               onClick={onOpen}
              >
                Create New Task
                <MdAdd />
@@ -442,6 +461,59 @@ import { Link } from 'react-router-dom';
            </Flex>
          </Box>
        </Box>
+       <Drawer
+         isOpen={isOpen}
+         placement="right"
+         onClose={onClose}
+         finalFocusRef={btnref}
+         sx={{ width: "622px", height: "411px", gap: "27px", opacity: "0px" }}
+       >
+         <DrawerOverlay />
+         <DrawerContent
+           sx={{
+             width: "622px",
+             height: "700px",
+             gap: "27px",
+             opacity: "0px",
+           }}
+         >
+           <DrawerCloseButton />
+           <DrawerBody sx={{
+             width: "622px",
+             height: "411px",
+             gap: "38px",
+             opacity: "0px",
+           }}>
+             <FormControl>
+               <FormLabel>Title</FormLabel>
+               <Input sx={{width:"250px"}} placeholder="Title..." />
+             </FormControl>
+             <FormControl>
+               <FormLabel>Status</FormLabel>
+               <Input sx={{width:"250px"}} placeholder="Status..." />
+             </FormControl>
+             <FormControl>
+               <FormLabel>Priority</FormLabel>
+               <Input sx={{width:"250px"}} placeholder="Priority..." />
+             </FormControl>
+             <FormControl>
+               <FormLabel>DeadLine</FormLabel>
+               <Input sx={{width:"250px"}} placeholder="DeadLine..." />
+             </FormControl>
+             <FormControl>
+               <FormLabel>Description</FormLabel>
+               <Input sx={{width:"250px"}} placeholder="Description..." />
+             </FormControl>
+           </DrawerBody>
+
+           <DrawerFooter>
+             <Button variant="outline" mr={3} onClick={onClose}>
+               Cancel
+             </Button>
+             <Button colorScheme="blue">Save</Button>
+           </DrawerFooter>
+         </DrawerContent>
+       </Drawer>
      </Suspense>
    );
  }

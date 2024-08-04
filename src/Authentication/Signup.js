@@ -140,6 +140,7 @@ const Signup = () => {
                 backgroundColor: "#4B36CC",
                 color: "white",
               }}
+              _hover={{ backgroundColor: "teal", color: "white" }}
               type="submit"
             >
               Signup
@@ -147,9 +148,24 @@ const Signup = () => {
           </form>
         </Box>
         <Box
-          sx={{ width: "444px", height: "24px", gap: "0px",margin:"auto",marginTop:"20px",opacity: "0px"}}
+          sx={{
+            width: "444px",
+            height: "24px",
+            gap: "0px",
+            margin: "auto",
+            marginTop: "20px",
+            opacity: "0px",
+          }}
         >
-          <Text sx={{fontFamily: "Inter",fontSize: "20px",fontWeight: "400",lineHeight: "24.2px",textAlign: "center"}}>
+          <Text
+            sx={{
+              fontFamily: "Inter",
+              fontSize: "20px",
+              fontWeight: "400",
+              lineHeight: "24.2px",
+              textAlign: "center",
+            }}
+          >
             Already have an account?
             <Link to={"/login"}>Login</Link>
           </Text>

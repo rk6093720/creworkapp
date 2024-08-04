@@ -128,9 +128,10 @@ import { Link } from 'react-router-dom';
                  backgroundColor: "#4B36CC",
                  color: "white",
                }}
+               _hover={{backgroundColor:"teal",color:"white"}} 
                type="submit"
              >
-               Signup
+               Login
              </Button>
            </form>
          </Box>
